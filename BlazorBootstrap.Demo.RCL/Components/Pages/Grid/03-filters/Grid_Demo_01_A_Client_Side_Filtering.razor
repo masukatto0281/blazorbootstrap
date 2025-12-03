@@ -5,6 +5,7 @@
       Responsive="true">
 
     <GridColumns>
+        @*
         <GridColumn TItem="Employee" HeaderText="Id" PropertyName="Id">
             @context.Id
         </GridColumn>
@@ -22,6 +23,61 @@
         </GridColumn>
         <GridColumn TItem="Employee" HeaderText="Department" PropertyName="Department.Name">
             @context.Department?.Name
+        </GridColumn>
+        *@
+        <GridColumn TItem="Employee" HeaderText="Int" PropertyName="Test.Int">
+            @context.Test?.Int
+        </GridColumn>
+        <GridColumn TItem="Employee" HeaderText="IntNullable" PropertyName="Test.IntNullable">
+            @context.Test?.IntNullable
+        </GridColumn>
+        <GridColumn TItem="Employee" HeaderText="String" PropertyName="Test.String">
+            @context.Test?.String
+        </GridColumn>
+        <GridColumn TItem="Employee" HeaderText="StringNullable" PropertyName="Test.StringNullable">
+            @context.Test?.StringNullable
+        </GridColumn>
+        <GridColumn TItem="Employee" HeaderText="Double" PropertyName="Test.Double">
+            @context.Test?.Double
+        </GridColumn>
+        <GridColumn TItem="Employee" HeaderText="DoubleNullable" PropertyName="Test.DoubleNullable">
+            @context.Test?.DoubleNullable
+        </GridColumn>
+        <GridColumn TItem="Employee" HeaderText="Bool" PropertyName="Test.Bool">
+            @context.Test?.Bool
+        </GridColumn>
+        <GridColumn TItem="Employee" HeaderText="BoolNullable" PropertyName="Test.BoolNullable">
+            @context.Test?.BoolNullable
+        </GridColumn>
+        <GridColumn TItem="Employee" HeaderText="DateTime" PropertyName="Test.DateTime">
+            @context.Test?.DateTime
+        </GridColumn>
+        <GridColumn TItem="Employee" HeaderText="DateTimeNullable" PropertyName="Test.DateTimeNullable">
+            @context.Test?.DateTimeNullable
+        </GridColumn>
+        <GridColumn TItem="Employee" HeaderText="DateOnly" PropertyName="Test.DateOnly">
+            @context.Test?.DateOnly
+        </GridColumn>
+        <GridColumn TItem="Employee" HeaderText="DateOnlyNullable" PropertyName="Test.DateOnlyNullable">
+            @context.Test?.DateOnlyNullable
+        </GridColumn>
+        <GridColumn TItem="Employee" HeaderText="TimeOnly" PropertyName="Test.TimeOnly">
+            @context.Test?.TimeOnly
+        </GridColumn>
+        <GridColumn TItem="Employee" HeaderText="TimeOnlyNullable" PropertyName="Test.TimeOnlyNullable">
+            @context.Test?.TimeOnlyNullable
+        </GridColumn>
+        <GridColumn TItem="Employee" HeaderText="Guid" PropertyName="Test.Guid">
+            @context.Test?.Guid
+        </GridColumn>
+        <GridColumn TItem="Employee" HeaderText="GuidNullable" PropertyName="Test.GuidNullable">
+            @context.Test?.GuidNullable
+        </GridColumn>
+        <GridColumn TItem="Employee" HeaderText="Enum" PropertyName="Test.Enum">
+            @context.Test?.Enum
+        </GridColumn>
+        <GridColumn TItem="Employee" HeaderText="EnumNullable" PropertyName="Test.EnumNullable">
+            @context.Test?.EnumNullable
         </GridColumn>
     </GridColumns>
 
@@ -42,6 +98,7 @@
     {
         return new List<Employee>
         {
+            /*
             new Employee { Id = 107, Name = "Alice", Designation = "AI Engineer", DOJ = new DateOnly(1998, 11, 17), IsActive = true, Department = new(){ Id = 1, Name = "Development" } },
             new Employee { Id = null, Name = "Bob", Designation = "Senior DevOps Engineer", DOJ = new DateOnly(1985, 1, 5), IsActive = true, Department = new(){ Id = 1, Name = "Development" } },
             new Employee { Id = 106, Name = "John", Designation = "Data Engineer", DOJ = new DateOnly(1995, 4, 17), IsActive = true, Department = new(){ Id = 1, Name = "Development" } },
@@ -52,6 +109,28 @@
             new Employee { Id = 108, Name = "Zayne", Designation = "Data Analyst", DOJ = new DateOnly(1991, 1, 1), IsActive = true },
             new Employee { Id = 109, Name = "Isha", Designation = "App Maker", DOJ = null, IsActive = true, Department = new(){ Id = 1, Name = "Development" } },
             new Employee { Id = 110, Name = "Vijay", Designation = null, DOJ = new DateOnly(1990, 7, 1), IsActive = true },
+            */
+            // bool, timeonly, guid, enum does not working now.
+            new Employee { Test = null },
+            new Employee { Test = new() { Int = 0, String = "", Double = 0.00f, Bool = false, DateTime = DateTime.Now, DateOnly = DateOnly.MinValue, TimeOnly = TimeOnly.MinValue, Guid = Guid.NewGuid(), Enum = TestEnum.First } },
+            new Employee { Test = new() { Int = 1, String = "nuyjhf", Double = 0.00f, Bool = true, DateTime = DateTime.Now, DateOnly = new DateOnly(2025, 3, 7), TimeOnly = new TimeOnly(11, 11), Guid = Guid.NewGuid(), Enum = TestEnum.First,
+                            IntNullable = 1 } },
+            new Employee { Test = new() { Int = 3, String = "nyuhjf", Double = 1.23f, Bool = false, DateTime = DateTime.Now, DateOnly = new DateOnly(2025, 3, 6), TimeOnly = new TimeOnly(22, 22), Guid = Guid.NewGuid(), Enum = TestEnum.Second,
+                            IntNullable = 1, StringNullable = "abcd" } },
+            new Employee { Test = new() { Int = 5, String = "nh", Double = 3.25f, Bool = true, DateTime = DateTime.Now, DateOnly = new DateOnly(2025, 3, 5), TimeOnly = new TimeOnly(1, 3), Guid = Guid.NewGuid(), Enum = TestEnum.Second,
+                            IntNullable = 1, StringNullable = "abcd", DoubleNullable = 1.234f } },
+            new Employee { Test = new() { Int = 9, String = "nhgf", Double = 0.451f, Bool = true, DateTime = DateTime.Now, DateOnly = new DateOnly(2025, 3, 25), TimeOnly = new TimeOnly(0, 0), Guid = Guid.NewGuid(), Enum = TestEnum.Third,
+                            IntNullable = 1, StringNullable = "abcd", DoubleNullable = 1.234f, BoolNullable = true } },
+            new Employee { Test = new() { Int = 4, String = "nhgf", Double = 0.45f, Bool = true, DateTime = DateTime.Now, DateOnly = new DateOnly(2025, 3, 7), TimeOnly = new TimeOnly(23, 59), Guid = Guid.NewGuid(), Enum = TestEnum.First,
+                            IntNullable = 1, StringNullable = "abcd", DoubleNullable = 1.234f, BoolNullable = true, DateTimeNullable = DateTime.UtcNow } },
+            new Employee { Test = new() { Int = 67, String = "hgnf", Double = 1.54f, Bool = false, DateTime = DateTime.Now, DateOnly = new DateOnly(2025, 3, 4), TimeOnly = new TimeOnly(12, 3), Guid = Guid.NewGuid(), Enum = TestEnum.Third,
+                            IntNullable = 1, StringNullable = "abcd", DoubleNullable = 1.234f, BoolNullable = true, DateTimeNullable = DateTime.UtcNow, DateOnlyNullable = new DateOnly(2025, 3, 7) } },
+            new Employee { Test = new() { Int = 5, String = "yrt", Double = 3.14159265f, Bool = true, DateTime = DateTime.Now, DateOnly = new DateOnly(2025, 3, 2), TimeOnly = new TimeOnly(2, 34), Guid = Guid.NewGuid(), Enum = TestEnum.Third,
+                            IntNullable = 1, StringNullable = "abcd", DoubleNullable = 1.234f, BoolNullable = true, DateTimeNullable = DateTime.UtcNow, DateOnlyNullable = new DateOnly(2025, 3, 7), TimeOnlyNullable = new TimeOnly(12, 34) } },
+            new Employee { Test = new() { Int = 3, String = "hn", Double = 99.999f, Bool = false, DateTime = DateTime.Now, DateOnly = new DateOnly(2025, 3, 1), TimeOnly = new TimeOnly(4, 56), Guid = Guid.NewGuid(), Enum = TestEnum.First,
+                            IntNullable = 1, StringNullable = "abcd", DoubleNullable = 1.234f, BoolNullable = true, DateTimeNullable = DateTime.UtcNow, DateOnlyNullable = new DateOnly(2025, 3, 7), TimeOnlyNullable = new TimeOnly(12, 34), GuidNullable = Guid.NewGuid() } },
+            new Employee { Test = new() { Int = 6, String = "n hg", Double = 0.12345f, Bool = true, DateTime = DateTime.Now, DateOnly = new DateOnly(2025, 3, 27), TimeOnly = new TimeOnly(7, 47), Guid = Guid.NewGuid(), Enum = TestEnum.Second,
+                            IntNullable = 1, StringNullable = "abcd", DoubleNullable = 1.234f, BoolNullable = true, DateTimeNullable = DateTime.UtcNow, DateOnlyNullable = new DateOnly(2025, 3, 7), TimeOnlyNullable = new TimeOnly(12, 34), GuidNullable = Guid.NewGuid(), EnumNullable = TestEnum.Second } },
         };
     }
 
@@ -64,11 +143,41 @@
         public DateOnly? DOJ { get; set; }
         public bool IsActive { get; set; }
         public Department? Department { get; set; }
+        public TestClass? Test { get; set; }
     }
 
     public record class Department
     {
         public int Id { get; set; }
         public string? Name { get; set; }
+    }
+
+    public record class TestClass
+    {
+        public int Int { get; set; }
+        public int? IntNullable { get; set; }
+        public string String { get; set; }
+        public string? StringNullable { get; set; }
+        public double Double { get; set; }
+        public double? DoubleNullable { get; set; }
+        public bool Bool { get; set; }
+        public bool? BoolNullable { get; set; }
+        public DateTime DateTime { get; set; }
+        public DateTime? DateTimeNullable { get; set; }
+        public DateOnly DateOnly { get; set; }
+        public DateOnly? DateOnlyNullable { get; set; }
+        public TimeOnly TimeOnly { get; set; }
+        public TimeOnly? TimeOnlyNullable { get; set; }
+        public Guid Guid { get; set; }
+        public Guid? GuidNullable { get; set; }
+        public TestEnum Enum { get; set; }
+        public TestEnum? EnumNullable { get; set; }
+    }
+
+    public enum TestEnum
+    {
+        First,
+        Second,
+        Third,
     }
 }
