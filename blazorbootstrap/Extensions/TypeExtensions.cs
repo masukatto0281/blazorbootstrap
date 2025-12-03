@@ -21,7 +21,7 @@ public static class TypeExtensions
         if (type is null || string.IsNullOrWhiteSpace(propertyName))
             return string.Empty;
 
-        var propertyType = type.GetProperty(propertyName)?.PropertyType;
+        var propertyType = type.GetPropertyType(propertyName);
         if (propertyType is null)
             return string.Empty;
 
@@ -82,7 +82,28 @@ public static class TypeExtensions
         if (type is null || string.IsNullOrWhiteSpace(propertyName))
             return null;
 
-        return type.GetProperty(propertyName)?.PropertyType;
+        if (!propertyName.Contains("."))
+            return type.GetProperty(propertyName)?.PropertyType;
+        else // Nested property
+        {
+            var propertyNames = propertyName.Split('.');
+            var _propertyName = propertyNames[0];
+
+            var propertyType = type.GetProperty(_propertyName)?.PropertyType;
+
+            if (propertyType is null)
+                return null;
+
+            for (var i = 1; i < propertyNames.Length; i++)
+            {
+                var _propName = propertyNames[i];
+                propertyType = propertyType.GetProperty(_propName)?.PropertyType;
+
+                if (propertyType is null)
+                    return null;
+            }
+            return propertyType;
+        }
     }
 
     public static string? GetDisplayName(this Type type, string? name)
