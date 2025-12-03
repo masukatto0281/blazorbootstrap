@@ -33,7 +33,7 @@ public static class ExpressionExtensions
 
     public static Expression<Func<TItem, bool>> GetBooleanEqualExpressionDelegate<TItem>(ParameterExpression parameterExpression, FilterItem filterItem, string propertyTypeName)
     {
-        var property = Expression.Property(parameterExpression, filterItem.PropertyName);
+        var property = GetExpressionSubProperty(parameterExpression, filterItem.PropertyName);
         var expression = Expression.Equal(property, GetBooleanConstantExpression(filterItem, propertyTypeName));
 
         return Expression.Lambda<Func<TItem, bool>>(expression, parameterExpression);
@@ -41,7 +41,7 @@ public static class ExpressionExtensions
 
     public static Expression<Func<TItem, bool>> GetBooleanNotEqualExpressionDelegate<TItem>(ParameterExpression parameterExpression, FilterItem filterItem, string propertyTypeName)
     {
-        var property = Expression.Property(parameterExpression, filterItem.PropertyName);
+        var property = GetExpressionSubProperty(parameterExpression, filterItem.PropertyName);
         var expression = Expression.NotEqual(property, GetBooleanConstantExpression(filterItem, propertyTypeName));
 
         return Expression.Lambda<Func<TItem, bool>>(expression, parameterExpression);
@@ -74,7 +74,7 @@ public static class ExpressionExtensions
 
     public static Expression<Func<TItem, bool>> GetDateEqualExpressionDelegate<TItem>(ParameterExpression parameterExpression, FilterItem filterItem, string propertyTypeName)
     {
-        var propertyExpression = Expression.Property(parameterExpression, filterItem.PropertyName);
+        var propertyExpression = GetExpressionSubProperty(parameterExpression, filterItem.PropertyName);
         var dateConstantExpression = GetDateConstantExpression(filterItem, propertyTypeName);
 
         Expression nonNullComparisonExpression;
@@ -112,7 +112,7 @@ public static class ExpressionExtensions
 
     public static Expression<Func<TItem, bool>> GetDateGreaterThanExpressionDelegate<TItem>(ParameterExpression parameterExpression, FilterItem filterItem, string propertyTypeName)
     {
-        var propertyExpression = Expression.Property(parameterExpression, filterItem.PropertyName);
+        var propertyExpression = GetExpressionSubProperty(parameterExpression, filterItem.PropertyName);
         var dateConstantExpression = GetDateConstantExpression(filterItem, propertyTypeName);
 
         Expression nonNullComparisonExpression;
@@ -150,7 +150,7 @@ public static class ExpressionExtensions
 
     public static Expression<Func<TItem, bool>> GetDateGreaterThanOrEqualExpressionDelegate<TItem>(ParameterExpression parameterExpression, FilterItem filterItem, string propertyTypeName)
     {
-        var propertyExpression = Expression.Property(parameterExpression, filterItem.PropertyName);
+        var propertyExpression = GetExpressionSubProperty(parameterExpression, filterItem.PropertyName);
         var dateConstantExpression = GetDateConstantExpression(filterItem, propertyTypeName);
 
         Expression nonNullComparisonExpression;
@@ -188,7 +188,7 @@ public static class ExpressionExtensions
 
     public static Expression<Func<TItem, bool>> GetDateLessThanExpressionDelegate<TItem>(ParameterExpression parameterExpression, FilterItem filterItem, string propertyTypeName)
     {
-        var propertyExpression = Expression.Property(parameterExpression, filterItem.PropertyName);
+        var propertyExpression = GetExpressionSubProperty(parameterExpression, filterItem.PropertyName);
         var dateConstantExpression = GetDateConstantExpression(filterItem, propertyTypeName);
 
         Expression nonNullComparisonExpression;
@@ -226,7 +226,7 @@ public static class ExpressionExtensions
 
     public static Expression<Func<TItem, bool>> GetDateLessThanOrEqualExpressionDelegate<TItem>(ParameterExpression parameterExpression, FilterItem filterItem, string propertyTypeName)
     {
-        var propertyExpression = Expression.Property(parameterExpression, filterItem.PropertyName);
+        var propertyExpression = GetExpressionSubProperty(parameterExpression, filterItem.PropertyName);
         var dateConstantExpression = GetDateConstantExpression(filterItem, propertyTypeName);
 
         Expression nonNullComparisonExpression;
@@ -264,7 +264,7 @@ public static class ExpressionExtensions
 
     public static Expression<Func<TItem, bool>> GetDateNotEqualExpressionDelegate<TItem>(ParameterExpression parameterExpression, FilterItem filterItem, string propertyTypeName)
     {
-        var propertyExpression = Expression.Property(parameterExpression, filterItem.PropertyName);
+        var propertyExpression = GetExpressionSubProperty(parameterExpression, filterItem.PropertyName);
         var dateConstantExpression = GetDateConstantExpression(filterItem, propertyTypeName);
 
         Expression nonNullComparisonExpression;
@@ -319,7 +319,7 @@ public static class ExpressionExtensions
 
     public static Expression<Func<TItem, bool>> GetEnumEqualExpressionDelegate<TItem>(ParameterExpression parameterExpression, FilterItem filterItem, Type propertyType, string propertyTypeName)
     {
-        var property = Expression.Property(parameterExpression, filterItem.PropertyName);
+        var property = GetExpressionSubProperty(parameterExpression, filterItem.PropertyName);
         var expression = Expression.Equal(property, GetEnumConstantExpression<TItem>(filterItem, propertyType, propertyTypeName));
 
         return Expression.Lambda<Func<TItem, bool>>(expression, parameterExpression);
@@ -327,7 +327,7 @@ public static class ExpressionExtensions
 
     public static Expression<Func<TItem, bool>> GetEnumNotEqualExpressionDelegate<TItem>(ParameterExpression parameterExpression, FilterItem filterItem, Type propertyType, string propertyTypeName)
     {
-        var property = Expression.Property(parameterExpression, filterItem.PropertyName);
+        var property = GetExpressionSubProperty(parameterExpression, filterItem.PropertyName);
         var expression = Expression.NotEqual(property, GetEnumConstantExpression<TItem>(filterItem, propertyType, propertyTypeName));
 
         return Expression.Lambda<Func<TItem, bool>>(expression, parameterExpression);
@@ -349,7 +349,7 @@ public static class ExpressionExtensions
 
     public static Expression<Func<TItem, bool>> GetGuidEqualExpressionDelegate<TItem>(ParameterExpression parameterExpression, FilterItem filterItem, string propertyTypeName)
     {
-        var property = Expression.Property(parameterExpression, filterItem.PropertyName);
+        var property = GetExpressionSubProperty(parameterExpression, filterItem.PropertyName);
         var expression = Expression.Equal(property, GetGuidConstantExpression<TItem>(filterItem, propertyTypeName));
 
         return Expression.Lambda<Func<TItem, bool>>(expression, parameterExpression);
@@ -357,7 +357,7 @@ public static class ExpressionExtensions
 
     public static Expression<Func<TItem, bool>> GetGuidNotEqualExpressionDelegate<TItem>(ParameterExpression parameterExpression, FilterItem filterItem, string propertyTypeName)
     {
-        var property = Expression.Property(parameterExpression, filterItem.PropertyName);
+        var property = GetExpressionSubProperty(parameterExpression, filterItem.PropertyName);
         var expression = Expression.NotEqual(property, GetGuidConstantExpression<TItem>(filterItem, propertyTypeName));
 
         return Expression.Lambda<Func<TItem, bool>>(expression, parameterExpression);
@@ -487,7 +487,7 @@ public static class ExpressionExtensions
 
     public static Expression<Func<TItem, bool>> GetNumberEqualExpressionDelegate<TItem>(ParameterExpression parameterExpression, FilterItem filterItem, string propertyTypeName)
     {
-        var propertyExpression = Expression.Property(parameterExpression, filterItem.PropertyName);
+        var propertyExpression = GetExpressionSubProperty(parameterExpression, filterItem.PropertyName);
         var constantExpression = GetNumberConstantExpression(filterItem, propertyTypeName);
 
         // Handle null check
@@ -515,7 +515,7 @@ public static class ExpressionExtensions
 
     public static Expression<Func<TItem, bool>> GetNumberGreaterThanExpressionDelegate<TItem>(ParameterExpression parameterExpression, FilterItem filterItem, string propertyTypeName)
     {
-        var propertyExpression = Expression.Property(parameterExpression, filterItem.PropertyName);
+        var propertyExpression = GetExpressionSubProperty(parameterExpression, filterItem.PropertyName);
         var constantExpression = GetNumberConstantExpression(filterItem, propertyTypeName);
 
         // Handle null check
@@ -543,7 +543,7 @@ public static class ExpressionExtensions
 
     public static Expression<Func<TItem, bool>> GetNumberGreaterThanOrEqualExpressionDelegate<TItem>(ParameterExpression parameterExpression, FilterItem filterItem, string propertyTypeName)
     {
-        var propertyExpression = Expression.Property(parameterExpression, filterItem.PropertyName);
+        var propertyExpression = GetExpressionSubProperty(parameterExpression, filterItem.PropertyName);
         var constantExpression = GetNumberConstantExpression(filterItem, propertyTypeName);
 
         // Handle null check
@@ -571,7 +571,7 @@ public static class ExpressionExtensions
 
     public static Expression<Func<TItem, bool>> GetNumberLessThanExpressionDelegate<TItem>(ParameterExpression parameterExpression, FilterItem filterItem, string propertyTypeName)
     {
-        var propertyExpression = Expression.Property(parameterExpression, filterItem.PropertyName);
+        var propertyExpression = GetExpressionSubProperty(parameterExpression, filterItem.PropertyName);
         var constantExpression = GetNumberConstantExpression(filterItem, propertyTypeName);
 
         // Handle null check
@@ -599,7 +599,7 @@ public static class ExpressionExtensions
 
     public static Expression<Func<TItem, bool>> GetNumberLessThanOrEqualExpressionDelegate<TItem>(ParameterExpression parameterExpression, FilterItem filterItem, string propertyTypeName)
     {
-        var propertyExpression = Expression.Property(parameterExpression, filterItem.PropertyName);
+        var propertyExpression = GetExpressionSubProperty(parameterExpression, filterItem.PropertyName);
         var constantExpression = GetNumberConstantExpression(filterItem, propertyTypeName);
 
         // Handle null check
@@ -627,7 +627,7 @@ public static class ExpressionExtensions
 
     public static Expression<Func<TItem, bool>> GetNumberNotEqualExpressionDelegate<TItem>(ParameterExpression parameterExpression, FilterItem filterItem, string propertyTypeName)
     {
-        var propertyExpression = Expression.Property(parameterExpression, filterItem.PropertyName);
+        var propertyExpression = GetExpressionSubProperty(parameterExpression, filterItem.PropertyName);
         var constantExpression = GetNumberConstantExpression(filterItem, propertyTypeName);
 
         // Handle null check
@@ -659,7 +659,7 @@ public static class ExpressionExtensions
 
     public static Expression<Func<TItem, bool>> GetStringContainsExpressionDelegate<TItem>(ParameterExpression parameterExpression, FilterItem filterItem)
     {
-        var propertyExp = Expression.Property(parameterExpression, filterItem.PropertyName);
+        var propertyExp = GetExpressionSubProperty(parameterExpression, filterItem.PropertyName);
         var someValue = Expression.Constant(filterItem.Value, typeof(string));
         var comparisonExpression = Expression.Constant(filterItem.StringComparison);
 
@@ -678,7 +678,7 @@ public static class ExpressionExtensions
 
     public static Expression<Func<TItem, bool>> GetStringDoesNotContainExpressionDelegate<TItem>(ParameterExpression parameterExpression, FilterItem filterItem)
     {
-        var propertyExp = Expression.Property(parameterExpression, filterItem.PropertyName);
+        var propertyExp = GetExpressionSubProperty(parameterExpression, filterItem.PropertyName);
         var someValue = Expression.Constant(filterItem.Value, typeof(string));
         var comparisonExpression = Expression.Constant(filterItem.StringComparison);
 
@@ -688,10 +688,10 @@ public static class ExpressionExtensions
         // Create method call expression for Contains method
         var methodInfo = typeof(string).GetMethod(nameof(string.Contains), new[] { typeof(string), typeof(StringComparison) });
         var containsExpression = Expression.Call(propertyExp, methodInfo!, someValue, comparisonExpression);
-        
+
         // "not contains" expression
         var notContainsExpression = Expression.Not(containsExpression);
-        
+
         // Combine null check and contains expression using AndAlso
         var finalExpression = Expression.AndAlso(nullCheckExpression, notContainsExpression);
 
@@ -700,7 +700,7 @@ public static class ExpressionExtensions
 
     public static Expression<Func<TItem, bool>> GetStringEndsWithExpressionDelegate<TItem>(ParameterExpression parameterExpression, FilterItem filterItem)
     {
-        var propertyExp = Expression.Property(parameterExpression, filterItem.PropertyName);
+        var propertyExp = GetExpressionSubProperty(parameterExpression, filterItem.PropertyName);
         var someValue = Expression.Constant(filterItem.Value, typeof(string));
         var comparisonExpression = Expression.Constant(filterItem.StringComparison);
 
@@ -719,7 +719,7 @@ public static class ExpressionExtensions
 
     public static Expression<Func<TItem, bool>> GetStringEqualsExpressionDelegate<TItem>(ParameterExpression parameterExpression, FilterItem filterItem)
     {
-        var propertyExp = Expression.Property(parameterExpression, filterItem.PropertyName);
+        var propertyExp = GetExpressionSubProperty(parameterExpression, filterItem.PropertyName);
         var someValue = Expression.Constant(filterItem.Value, typeof(string));
         var comparisonExpression = Expression.Constant(filterItem.StringComparison);
 
@@ -738,7 +738,7 @@ public static class ExpressionExtensions
 
     public static Expression<Func<TItem, bool>> GetStringNotEqualsExpressionDelegate<TItem>(ParameterExpression parameterExpression, FilterItem filterItem)
     {
-        var propertyExp = Expression.Property(parameterExpression, filterItem.PropertyName);
+        var propertyExp = GetExpressionSubProperty(parameterExpression, filterItem.PropertyName);
         var someValue = Expression.Constant(filterItem.Value, typeof(string));
         var comparisonExpression = Expression.Constant(filterItem.StringComparison);
 
@@ -758,7 +758,7 @@ public static class ExpressionExtensions
 
     public static Expression<Func<TItem, bool>> GetStringStartsWithExpressionDelegate<TItem>(ParameterExpression parameterExpression, FilterItem filterItem)
     {
-        var propertyExp = Expression.Property(parameterExpression, filterItem.PropertyName);
+        var propertyExp = GetExpressionSubProperty(parameterExpression, filterItem.PropertyName);
         var someValue = Expression.Constant(filterItem.Value, typeof(string));
         var comparisonExpression = Expression.Constant(filterItem.StringComparison);
 
@@ -792,6 +792,50 @@ public static class ExpressionExtensions
     }
 
     #endregion
+
+    private static Expression GetExpressionSubProperty(Expression expression, string propertyName)
+    {
+        if (!propertyName.Contains('.'))
+            return Expression.Property(expression, propertyName);
+        else // Nested property with null-safety
+        {
+            var propertyNames = propertyName.Split('.');
+
+            // build member access expressions for each level
+            var levelExprs = new List<Expression>();
+            Expression current = Expression.Property(expression, propertyNames[0]);
+            levelExprs.Add(current);
+
+            for (var i = 1; i < propertyNames.Length; i++)
+            {
+                current = Expression.Property(current, propertyNames[i]);
+                levelExprs.Add(current);
+            }
+
+            // final access expression and its type
+            Expression finalAccess = levelExprs[^1];
+            var finalType = finalAccess.Type;
+
+            // if final is value type and not nullable, convert to nullable so we can return null when parent is null
+            if (finalType.IsValueType && Nullable.GetUnderlyingType(finalType) == null)
+            {
+                var nullableFinalType = typeof(Nullable<>).MakeGenericType(finalType);
+                finalAccess = Expression.Convert(finalAccess, nullableFinalType);
+            }
+
+            // build nested conditional checks: parent != null ? childExpr : (null)
+            Expression result = finalAccess;
+
+            for (int j = levelExprs.Count - 2; j >= 0; j--)
+            {
+                var parent = levelExprs[j];
+                var parentNullCheck = Expression.NotEqual(parent, Expression.Constant(null, parent.Type));
+                result = Expression.Condition(parentNullCheck, result, Expression.Constant(null, result.Type));
+            }
+
+            return result;
+        }
+    }
 }
 
 internal class SubstExpressionVisitor : ExpressionVisitor

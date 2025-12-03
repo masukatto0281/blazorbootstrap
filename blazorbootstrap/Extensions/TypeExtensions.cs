@@ -82,7 +82,7 @@ public static class TypeExtensions
         if (type is null || string.IsNullOrWhiteSpace(propertyName))
             return null;
 
-        if (!propertyName.Contains("."))
+        if (!propertyName.Contains('.'))
             return type.GetProperty(propertyName)?.PropertyType;
         else // Nested property
         {
