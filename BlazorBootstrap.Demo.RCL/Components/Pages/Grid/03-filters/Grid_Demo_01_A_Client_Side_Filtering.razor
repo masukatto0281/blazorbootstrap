@@ -25,13 +25,13 @@
             @context.Department?.Name
         </GridColumn>
         *@
-        <GridColumn TItem="Employee" HeaderText="Int" PropertyName="Test.Int">
+        <GridColumn TItem="Employee" HeaderText="Int" PropertyName="Test.Int" SelectableFilter="true">
             @context.Test?.Int
         </GridColumn>
         <GridColumn TItem="Employee" HeaderText="IntNullable" PropertyName="Test.IntNullable">
             @context.Test?.IntNullable
         </GridColumn>
-        <GridColumn TItem="Employee" HeaderText="String" PropertyName="Test.String">
+        <GridColumn TItem="Employee" HeaderText="String" PropertyName="Test.String" SelectableFilter="true">
             @context.Test?.String
         </GridColumn>
         <GridColumn TItem="Employee" HeaderText="StringNullable" PropertyName="Test.StringNullable">

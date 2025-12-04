@@ -82,7 +82,13 @@
                                     PropertyType="@column.GetPropertyType()"
                                     PropertyTypeName="@column.GetPropertyTypeName()"
                                     Unit="@column.FilterTextboxWidthUnit"
-                                    SelectableFilterList="@(column.SelectableFilter ? items.Select(x=>x.GetType().GetProperty(column.PropertyName).GetValue(x)?.ToString()).Distinct().OrderBy(x=>x).ToList() : new List<string>())" />
+                                    SelectableFilterList="@(column.SelectableFilter ? 
+                                        items.Select(x => {
+                                            object? a = x;
+                                            foreach(var p in column.PropertyName.Split('.')) 
+                                                a = a?.GetType()?.GetProperty(p)?.GetValue(a);
+                                            return a?.ToString() ?? "";
+                                        }).Distinct().Where(y => !string.IsNullOrEmpty(y)).OrderBy(y => y).ToList() : new List<string>())" />
                                 }
                             </th>
                         }
