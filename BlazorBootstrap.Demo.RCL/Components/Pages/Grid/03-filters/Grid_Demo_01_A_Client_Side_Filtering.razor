@@ -6,22 +6,22 @@
 
     <GridColumns>
         @*
-        <GridColumn TItem="Employee" HeaderText="Id" PropertyName="Id">
+        <GridColumn TItem="Employee" HeaderText="Id" PropertyName="Id" SelectableFilter="true">
             @context.Id
         </GridColumn>
-        <GridColumn TItem="Employee" HeaderText="Employee Name" PropertyName="Name">
+        <GridColumn TItem="Employee" HeaderText="Employee Name" PropertyName="Name" SelectableFilter="true">
             @context.Name
         </GridColumn>
-        <GridColumn TItem="Employee" HeaderText="Designation" PropertyName="Designation">
+        <GridColumn TItem="Employee" HeaderText="Designation" PropertyName="Designation" SelectableFilter="true">
             @context.Designation
         </GridColumn>
-        <GridColumn TItem="Employee" HeaderText="DOJ" PropertyName="DOJ">
+        <GridColumn TItem="Employee" HeaderText="DOJ" PropertyName="DOJ" SelectableFilter="true">
             @context.DOJ
         </GridColumn>
-        <GridColumn TItem="Employee" HeaderText="Active" PropertyName="IsActive">
+        <GridColumn TItem="Employee" HeaderText="Active" PropertyName="IsActive" SelectableFilter="true">
             @context.IsActive
         </GridColumn>
-        <GridColumn TItem="Employee" HeaderText="Department" PropertyName="Department.Name">
+        <GridColumn TItem="Employee" HeaderText="Department" PropertyName="Department.Name" SelectableFilter="true">
             @context.Department?.Name
         </GridColumn>
         *@

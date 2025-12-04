@@ -81,7 +81,8 @@
                                     GridColumnFilterChanged="async args => await column.OnFilterChangedAsync(args, column)"
                                     PropertyType="@column.GetPropertyType()"
                                     PropertyTypeName="@column.GetPropertyTypeName()"
-                                    Unit="@column.FilterTextboxWidthUnit" />
+                                    Unit="@column.FilterTextboxWidthUnit"
+                                    SelectableFilterList="@(column.SelectableFilter ? items.Select(x=>x.GetType().GetProperty(column.PropertyName).GetValue(x)?.ToString()).Distinct().OrderBy(x=>x).ToList() : new List<string>())" />
                                 }
                             </th>
                         }
