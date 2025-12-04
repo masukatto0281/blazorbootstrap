@@ -5,19 +5,19 @@
       Responsive="true">
 
     <GridColumns>
-        <GridColumn TItem="Employee4" HeaderText="Id" PropertyName="Id">
+        <GridColumn TItem="Employee4" HeaderText="Id" PropertyName="Id" SelectableFilter="true">
             @context.Id
         </GridColumn>
-        <GridColumn TItem="Employee4" HeaderText="Employee Name" PropertyName="Name">
+        <GridColumn TItem="Employee4" HeaderText="Employee Name" PropertyName="Name" SelectableFilter="true">
             @context.Name
         </GridColumn>
-        <GridColumn TItem="Employee4" HeaderText="Designation" PropertyName="Designation">
+        <GridColumn TItem="Employee4" HeaderText="Designation" PropertyName="Designation" SelectableFilter="false">
             @context.Designation
         </GridColumn>
-        <GridColumn TItem="Employee4" HeaderText="DOJ" PropertyName="DOJ">
+        <GridColumn TItem="Employee4" HeaderText="DOJ" PropertyName="DOJ" SelectableFilter="true">
             @context.DOJ
         </GridColumn>
-        <GridColumn TItem="Employee4" HeaderText="Active" PropertyName="IsActive">
+        <GridColumn TItem="Employee4" HeaderText="Active" PropertyName="IsActive" SelectableFilter="false">
             @context.IsActive
         </GridColumn>
     </GridColumns>
