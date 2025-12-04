@@ -25,6 +25,9 @@
             @context.Department?.Name
         </GridColumn>
         *@
+        <GridColumn TItem="Employee" HeaderText="IsActive2" PropertyName="IsActive2">
+            @context.IsActive2
+        </GridColumn>
         <GridColumn TItem="Employee" HeaderText="Int" PropertyName="Test.Int">
             @context.Test?.Int
         </GridColumn>
@@ -111,6 +114,7 @@
             new Employee { Id = 110, Name = "Vijay", Designation = null, DOJ = new DateOnly(1990, 7, 1), IsActive = true },
             */
             // bool, timeonly, guid, enum does not working now.
+            new Employee { IsActive2 = null },
             new Employee { Test = null },
             new Employee { Test = new() { Int = 0, String = "", Double = 0.00f, Bool = false, DateTime = DateTime.Now, DateOnly = DateOnly.MinValue, TimeOnly = TimeOnly.MinValue, Guid = Guid.NewGuid(), Enum = TestEnum.First } },
             new Employee { Test = new() { Int = 1, String = "nuyjhf", Double = 0.00f, Bool = true, DateTime = DateTime.Now, DateOnly = new DateOnly(2025, 3, 7), TimeOnly = new TimeOnly(11, 11), Guid = Guid.NewGuid(), Enum = TestEnum.First,
@@ -144,6 +148,7 @@
         public bool IsActive { get; set; }
         public Department? Department { get; set; }
         public TestClass? Test { get; set; }
+        public bool? IsActive2 { get; set; }
     }
 
     public record class Department

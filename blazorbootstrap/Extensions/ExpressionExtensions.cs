@@ -33,7 +33,7 @@ public static class ExpressionExtensions
 
     public static Expression<Func<TItem, bool>> GetBooleanEqualExpressionDelegate<TItem>(ParameterExpression parameterExpression, FilterItem filterItem, string propertyTypeName)
     {
-        var property = GetExpressionSubProperty(parameterExpression, filterItem.PropertyName);
+        var property = Expression.Property(parameterExpression, filterItem.PropertyName); // GetExpressionSubProperty(parameterExpression, filterItem.PropertyName);
         var expression = Expression.Equal(property, GetBooleanConstantExpression(filterItem, propertyTypeName));
 
         return Expression.Lambda<Func<TItem, bool>>(expression, parameterExpression);
@@ -793,48 +793,72 @@ public static class ExpressionExtensions
 
     #endregion
 
-    private static Expression GetExpressionSubProperty(Expression expression, string propertyName)
+    private static Expression GetExpressionSubProperty(Expression expression, string propertyName, Type? desiredType = null)
     {
         if (!propertyName.Contains('.'))
             return Expression.Property(expression, propertyName);
-        else // Nested property with null-safety
+
+        var propertyNames = propertyName.Split('.');
+
+        // build member access expressions for each level
+        var levelExprs = new List<Expression>();
+        Expression current = Expression.Property(expression, propertyNames[0]);
+        levelExprs.Add(current);
+
+        for (var i = 1; i < propertyNames.Length; i++)
         {
-            var propertyNames = propertyName.Split('.');
-
-            // build member access expressions for each level
-            var levelExprs = new List<Expression>();
-            Expression current = Expression.Property(expression, propertyNames[0]);
+            current = Expression.Property(current, propertyNames[i]);
             levelExprs.Add(current);
-
-            for (var i = 1; i < propertyNames.Length; i++)
-            {
-                current = Expression.Property(current, propertyNames[i]);
-                levelExprs.Add(current);
-            }
-
-            // final access expression and its type
-            Expression finalAccess = levelExprs[^1];
-            var finalType = finalAccess.Type;
-
-            // if final is value type and not nullable, convert to nullable so we can return null when parent is null
-            if (finalType.IsValueType && Nullable.GetUnderlyingType(finalType) == null)
-            {
-                var nullableFinalType = typeof(Nullable<>).MakeGenericType(finalType);
-                finalAccess = Expression.Convert(finalAccess, nullableFinalType);
-            }
-
-            // build nested conditional checks: parent != null ? childExpr : (null)
-            Expression result = finalAccess;
-
-            for (int j = levelExprs.Count - 2; j >= 0; j--)
-            {
-                var parent = levelExprs[j];
-                var parentNullCheck = Expression.NotEqual(parent, Expression.Constant(null, parent.Type));
-                result = Expression.Condition(parentNullCheck, result, Expression.Constant(null, result.Type));
-            }
-
-            return result;
         }
+
+        // final access expression and its type
+        Expression finalAccess = levelExprs[^1];
+        var finalType = finalAccess.Type;
+
+        // Determine target type: use desiredType if provided, otherwise use the property's original type (destructive change)
+        Type targetType = desiredType is not null ? desiredType : finalType;
+
+        // Convert or unwrap finalAccess to match targetType
+        if (finalAccess.Type != targetType)
+        {
+            // If finalAccess is nullable and we want non-nullable -> access .Value
+            if (Nullable.GetUnderlyingType(finalAccess.Type) is not null && !targetType.IsNullableType() && targetType.IsValueType)
+            {
+                finalAccess = Expression.Property(finalAccess, "Value");
+            }
+            else
+            {
+                finalAccess = Expression.Convert(finalAccess, targetType);
+            }
+        }
+
+        return finalAccess;
+
+        // build nested conditional checks: parent != null ? childExpr : (null or default)
+        Expression result = finalAccess;
+
+        for (int j = levelExprs.Count - 2; j >= 0; j--)
+        {
+            var parent = levelExprs[j];
+            var parentNullCheck = Expression.NotEqual(parent, Expression.Constant(null, parent.Type));
+
+            // Else expression must match targetType:
+            Expression elseExpr;
+            if (targetType.IsValueType && !targetType.IsNullableType())
+            {
+                // non-nullable value type -> use default(T)
+                elseExpr = Expression.Default(targetType);
+            }
+            else
+            {
+                // nullable value type or reference type -> use null constant of targetType
+                elseExpr = Expression.Constant(null, targetType);
+            }
+
+            result = Expression.Condition(parentNullCheck, result, elseExpr);
+        }
+
+        return result;
     }
 }
 
