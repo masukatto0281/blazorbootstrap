@@ -274,6 +274,12 @@ public partial class GridColumn<TItem> : BlazorBootstrapComponentBase
     public string FilterValue { get; set; } = default!;
 
     /// <summary>
+    /// Gets or sets the dropdown filter that allows selecting from unique values in the column.
+    /// </summary>
+    [Parameter]
+    public bool SelectableFilter { get; set; } = false;
+
+    /// <summary>
     /// Indicates whether the column is frozen.
     /// </summary>
     /// <remarks>

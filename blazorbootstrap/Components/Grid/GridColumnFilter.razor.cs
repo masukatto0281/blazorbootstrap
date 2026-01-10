@@ -36,6 +36,13 @@ public partial class GridColumnFilter : BlazorBootstrapComponentBase
 
     internal void SetDefaultFilter()
     {
+        if (SelectableFilterList.Any())
+        {
+            if (filterOperator is FilterOperator.None or FilterOperator.Clear)
+                filterOperator = FilterOperator.Equals;
+            return;
+        }
+
         if (PropertyTypeName is StringConstants.PropertyTypeNameInt16
                                 or StringConstants.PropertyTypeNameInt32
                                 or StringConstants.PropertyTypeNameInt64
@@ -77,6 +84,11 @@ public partial class GridColumnFilter : BlazorBootstrapComponentBase
 
     private async Task<IEnumerable<FilterOperatorInfo>> GetFilterOperatorsAsync(string propertyTypeName)
     {
+        if (SelectableFilterList.Any())
+        {
+            return FilterOperatorUtility.GetEnumFilterOperators();
+        }
+
         if (FiltersTranslationProvider is null)
             return FilterOperatorUtility.GetFilterOperators(PropertyTypeName!);
 
@@ -128,6 +140,12 @@ public partial class GridColumnFilter : BlazorBootstrapComponentBase
 
     private void SetSelectedFilterSymbol()
     {
+        if (SelectableFilterList.Any())
+        {
+            selectedFilterSymbol = filterOperators?.FirstOrDefault(x => x.FilterOperator == filterOperator)?.Symbol;
+            return;
+        }
+
         if (PropertyTypeName is StringConstants.PropertyTypeNameInt16
                                 or StringConstants.PropertyTypeNameInt32
                                 or StringConstants.PropertyTypeNameInt64
@@ -231,6 +249,12 @@ public partial class GridColumnFilter : BlazorBootstrapComponentBase
     /// </summary>
     [Parameter]
     public Unit Unit { get; set; }
+
+    /// <summary>
+    /// Dropdown selectable filter list.
+    /// </summary>
+    [Parameter]
+    public IEnumerable<string> SelectableFilterList { get; set; } = new List<string>();
 
     #endregion
 }
